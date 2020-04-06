@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserMapper">
+  <resultMap id="BaseResultMap" type="entity.User">
+    <id column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="userPwd" jdbcType="VARCHAR" property="userpwd" />
+    <result column="userEmail" jdbcType="VARCHAR" property="useremail" />
+    <result column="userTel" jdbcType="INTEGER" property="usertel" />
+    <result column="userBron" jdbcType="VARCHAR" property="userbron" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, userName, userPwd, userEmail, userTel, userBron
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.User">
+    insert into user (userId, userName, userPwd, 
+      userEmail, userTel, userBron
+      )
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpwd,jdbcType=VARCHAR}, 
+      #{useremail,jdbcType=VARCHAR}, #{usertel,jdbcType=INTEGER}, #{userbron,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="userpwd != null">
+        userPwd,
+      </if>
+      <if test="useremail != null">
+        userEmail,
+      </if>
+      <if test="usertel != null">
+        userTel,
+      </if>
+      <if test="userbron != null">
+        userBron,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpwd != null">
+        #{userpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="useremail != null">
+        #{useremail,jdbcType=VARCHAR},
+      </if>
+      <if test="usertel != null">
+        #{usertel,jdbcType=INTEGER},
+      </if>
+      <if test="userbron != null">
+        #{userbron,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.User">
+    update user
+    <set>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpwd != null">
+        userPwd = #{userpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="useremail != null">
+        userEmail = #{useremail,jdbcType=VARCHAR},
+      </if>
+      <if test="usertel != null">
+        userTel = #{usertel,jdbcType=INTEGER},
+      </if>
+      <if test="userbron != null">
+        userBron = #{userbron,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.User">
+    update user
+    set userName = #{username,jdbcType=VARCHAR},
+      userPwd = #{userpwd,jdbcType=VARCHAR},
+      userEmail = #{useremail,jdbcType=VARCHAR},
+      userTel = #{usertel,jdbcType=INTEGER},
+      userBron = #{userbron,jdbcType=VARCHAR}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <select id="userlogin" resultType="User">
+SELECT
+  `userId`,
+  `userName`,
+  `userPwd`,
+  `userEmail`,
+  `userTel`,
+  `userBron`
+FROM
+   `user`
+   where
+`userName` = #{username}
+and
+`userPwd` = #{userpwd}
+  </select>
+  <insert id="userReis">
+    INSERT INTO  `user` (
+  `userName`,
+  `userPwd`,
+  `userEmail`,
+  `userTel`,
+  `userBron`
+)
+VALUES
+  (
+    #{username},
+    #{userpwd},
+    #{useremail},
+    #{usertel},
+    #{userbron}
+  ) ;
+
+
+  </insert>
+</mapper>

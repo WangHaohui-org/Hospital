@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--springmvc的一键式配置-->
+    <mvc:annotation-driven>
+            <mvc:message-converters>
+                <!--配置消息转换器来把@ResponseBody注解方法的返回值转为浏览器需要的内容-->
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=utf-8</value>
+                            <value>application/json;charset=utf-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=utf-8</value>
+                            <value>application/json;charset=utf-8</value>
+                        </list>
+                    </property>
+                    <property name="features">
+                        <list>
+                            <value>WriteDateUseDateFormat</value>
+                        </list>
+                    </property>
+                </bean>
+            </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--配置视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--指定视图的前缀-->
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!--扫描控制器所在的包-->
+    <context:component-scan base-package="controller" />
+
+    <!--解决不能访问静态资源的问题-->
+    <mvc:resources mapping="/statics/**" location="/statics/" />
+
+
+    <!--文件上传解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8" />
+        <!-- 指定所上传文件的总大小不能超过10485760000B。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="10485760000"></property>
+        <property name="maxInMemorySize" value="40960"></property>
+    </bean>
+
+    <!--拦截器-->
+  <!--  <mvc:interceptors>
+        &lt;!&ndash;定义在interceptors里面的拦截器自动对所有请求拦截&ndash;&gt;
+        &lt;!&ndash;<bean class="cn.appsys.interceptor.LoginInterceptor"></bean>&ndash;&gt;
+        <mvc:interceptor>
+            &lt;!&ndash;要拦截的路径
+                /*  :  /下面的所有请求
+                /** : 表示所有目录下所有请求
+                    /index.html
+                    /static/css/jq.js
+            &ndash;&gt;
+            <mvc:mapping path="/**"/>
+            &lt;!&ndash;要排除的路径&ndash;&gt;
+            <mvc:exclude-mapping path="/login.html" />
+            <mvc:exclude-mapping path="/login" />
+            <mvc:exclude-mapping path="/statics/**" />
+            <bean class="cn.invitation.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+
+    </mvc:interceptors>-->
+</beans>

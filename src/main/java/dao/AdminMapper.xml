@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AdminMapper">
+  <resultMap id="BaseResultMap" type="entity.Admin">
+    <id column="adminId" jdbcType="INTEGER" property="adminid" />
+    <result column="adminName" jdbcType="VARCHAR" property="adminname" />
+    <result column="adminPwd" jdbcType="VARCHAR" property="adminpwd" />
+    <result column="adminAdress" jdbcType="VARCHAR" property="adminadress" />
+    <result column="adminTel" jdbcType="INTEGER" property="admintel" />
+    <result column="amdinEmail" jdbcType="VARCHAR" property="amdinemail" />
+    <result column="adminTp" jdbcType="VARCHAR" property="admintp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    adminId, adminName, adminPwd, adminAdress, adminTel, amdinEmail, adminTp
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.Admin">
+    insert into admin (adminId, adminName, adminPwd, 
+      adminAdress, adminTel, amdinEmail, 
+      adminTp)
+    values (#{adminid,jdbcType=INTEGER}, #{adminname,jdbcType=VARCHAR}, #{adminpwd,jdbcType=VARCHAR}, 
+      #{adminadress,jdbcType=VARCHAR}, #{admintel,jdbcType=INTEGER}, #{amdinemail,jdbcType=VARCHAR}, 
+      #{admintp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Admin">
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminid != null">
+        adminId,
+      </if>
+      <if test="adminname != null">
+        adminName,
+      </if>
+      <if test="adminpwd != null">
+        adminPwd,
+      </if>
+      <if test="adminadress != null">
+        adminAdress,
+      </if>
+      <if test="admintel != null">
+        adminTel,
+      </if>
+      <if test="amdinemail != null">
+        amdinEmail,
+      </if>
+      <if test="admintp != null">
+        adminTp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminid != null">
+        #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="adminname != null">
+        #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpwd != null">
+        #{adminpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="adminadress != null">
+        #{adminadress,jdbcType=VARCHAR},
+      </if>
+      <if test="admintel != null">
+        #{admintel,jdbcType=INTEGER},
+      </if>
+      <if test="amdinemail != null">
+        #{amdinemail,jdbcType=VARCHAR},
+      </if>
+      <if test="admintp != null">
+        #{admintp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Admin">
+    update admin
+    <set>
+      <if test="adminname != null">
+        adminName = #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpwd != null">
+        adminPwd = #{adminpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="adminadress != null">
+        adminAdress = #{adminadress,jdbcType=VARCHAR},
+      </if>
+      <if test="admintel != null">
+        adminTel = #{admintel,jdbcType=INTEGER},
+      </if>
+      <if test="amdinemail != null">
+        amdinEmail = #{amdinemail,jdbcType=VARCHAR},
+      </if>
+      <if test="admintp != null">
+        adminTp = #{admintp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Admin">
+    update admin
+    set adminName = #{adminname,jdbcType=VARCHAR},
+      adminPwd = #{adminpwd,jdbcType=VARCHAR},
+      adminAdress = #{adminadress,jdbcType=VARCHAR},
+      adminTel = #{admintel,jdbcType=INTEGER},
+      amdinEmail = #{amdinemail,jdbcType=VARCHAR},
+      adminTp = #{admintp,jdbcType=VARCHAR}
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </update>
+  <select id="adminlogin" resultType="Admin">
+select
+  `adminId`,
+  `adminName`,
+  `adminPwd`,
+  `adminAdress`,
+  `adminTel`,
+  `amdinEmail`,
+  `adminTp`
+from
+   `admin`
+   where
+   `adminName` = #{adminname}
+   and
+   `adminPwd` = #{adminpwd}
+
+  </select>
+  <insert id="adminReis">
+    INSERT INTO  `admin` (
+  `adminName`,
+  `adminPwd`,
+  `adminAdress`,
+  `adminTel`,
+  `amdinEmail`,
+  `adminTp`
+)
+VALUES
+  (
+    #{adminname},
+    #{adminpwd},
+    #{adminadress},
+    #{admintel},
+    #{amdinemail},
+    #{admintp}
+  ) ;
+
+
+  </insert>
+</mapper>

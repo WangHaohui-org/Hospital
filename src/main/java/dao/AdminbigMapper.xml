@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AdminbigMapper">
+  <resultMap id="BaseResultMap" type="entity.Adminbig">
+    <id column="adId" jdbcType="INTEGER" property="adid" />
+    <result column="adminName" jdbcType="VARCHAR" property="adminname" />
+    <result column="adminPwd" jdbcType="VARCHAR" property="adminpwd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    adId, adminName, adminPwd
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from adminbig
+    where adId = #{adid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from adminbig
+    where adId = #{adid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.Adminbig">
+    insert into adminbig (adId, adminName, adminPwd
+      )
+    values (#{adid,jdbcType=INTEGER}, #{adminname,jdbcType=VARCHAR}, #{adminpwd,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Adminbig">
+    insert into adminbig
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adid != null">
+        adId,
+      </if>
+      <if test="adminname != null">
+        adminName,
+      </if>
+      <if test="adminpwd != null">
+        adminPwd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adid != null">
+        #{adid,jdbcType=INTEGER},
+      </if>
+      <if test="adminname != null">
+        #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpwd != null">
+        #{adminpwd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Adminbig">
+    update adminbig
+    <set>
+      <if test="adminname != null">
+        adminName = #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpwd != null">
+        adminPwd = #{adminpwd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adId = #{adid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Adminbig">
+    update adminbig
+    set adminName = #{adminname,jdbcType=VARCHAR},
+      adminPwd = #{adminpwd,jdbcType=VARCHAR}
+    where adId = #{adid,jdbcType=INTEGER}
+  </update>
+  <select id="adbigLogin" resultType="Adminbig">
+    SELECT
+  `adId`,
+  `adminName`,
+  `adminPwd`
+FROM
+  `adminbig`
+  where
+`adminName` = #{adminname}
+and
+    `adminPwd` = #{adminpwd}
+  </select>
+</mapper>
